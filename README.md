@@ -4,7 +4,15 @@
     <img src="https://img.shields.io/badge/CCDS-Project%20template-328F97?logo=cookiecutter" />
 </a>
 
-mlops_homework
+##Как настроить
+1. Cоздайте виртуальное окружение для изоляции зависимостей
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+venv\Scripts\activate  # Windows
+2. Установите зависимости
+pip install -r requirements.txt
+3. Настройте хуки прекоммита
+pre-commit install
 
 ## Project Organization
 

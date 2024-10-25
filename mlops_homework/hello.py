@@ -1,3 +1,2 @@
 def hello_world():
-    print("Hello, branch 1 branch 2!") # [ ] Исправить
-
+    print("Hello, branch 1 branch 2!")   # [ ] Исправить

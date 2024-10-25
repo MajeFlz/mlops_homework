@@ -1,5 +1,7 @@
 black
 flake8
+mypy
+pre-commit
 isort
 loguru
 mkdocs
@@ -8,3 +10,5 @@ python-dotenv
 tqdm
 typer
 -e .
+
+
