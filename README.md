@@ -4,7 +4,7 @@
     <img src="https://img.shields.io/badge/CCDS-Project%20template-328F97?logo=cookiecutter" />
 </a>
 
-##Как настроить
+## Как настроить
 1. Cоздайте виртуальное окружение для изоляции зависимостей
 
 ```
