@@ -6,13 +6,29 @@
 
 ##Как настроить
 1. Cоздайте виртуальное окружение для изоляции зависимостей
+
+```
 python -m venv venv
+
+```
+
+1.1 запустите окружение
+
+```
 source venv/bin/activate  # Linux/Mac
 venv\Scripts\activate  # Windows
+```
+
 2. Установите зависимости
+```
 pip install -r requirements.txt
+```
+
 3. Настройте хуки прекоммита
+
+```
 pre-commit install
+```
 
 ## Project Organization
 
