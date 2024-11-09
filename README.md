@@ -4,27 +4,63 @@
     <img src="https://img.shields.io/badge/CCDS-Project%20template-328F97?logo=cookiecutter" />
 </a>
 
-## Как настроить
-1. Cоздайте виртуальное окружение для изоляции зависимостей
+##Как настроить
+
+### lr3
+1. Клонируйте репозиторий и перейдите в директорию проекта
+	
+```
+git clone https://github.com/MajeFlz/mlops_homework
+cd mlops_homework
+git checkout homework3
 
 ```
-python -m venv venv
+
+2. Установите Poetry и зависимости проекта
 
 ```
-
-1.1 запустите окружение
-
-```
-source venv/bin/activate  # Linux/Mac
-venv\Scripts\activate  # Windows
+poetry install
 ```
 
-2. Установите зависимости
+3. Активируйте виртуальное окружение Poetry
 ```
-pip install -r requirements.txt
+poetry shell
 ```
 
-3. Настройте хуки прекоммита
+4. Создайте файл .env по шаблону .env.example
+
+```
+echo "MINIO_ROOT_USER=admin" >> .env
+echo "MINIO_ROOT_PASSWORD=password" >> .env
+```
+4.1 Создайте папки для данных
+```
+mkdir -p ./data/raw ./data/processed
+```
+5. Соберите и запустите Docker
+
+```
+docker-compose up -d --build
+```
+Теперь сервис доступен по локальному адресу: http://127.0.0.1:9000
+И там уже будет bucket с файлом датасета
+
+6. Запустите скрипт run_etl.py для автоматического преобразования
+```
+python run_etl.py
+```
+ ИЛИ
+ 
+ Запустите скрипты по отдельности
+```
+python ./etl_scripts/scripts/download.py --bucket my-bucket --key titanic.csv --output ./data/raw/dataset_titanic.csv
+python ./etl_scripts/scripts/process.py --input ./data/raw/dataset_titanic.csv --output ./data/processed/processed_dataset_titanic.csv
+python ./etl_scripts/scripts/upload.py --bucket my-bucket --key processed_dataset_titanic.csv --file ./data/processed/processed_dataset_titanic.csv
+ ```
+
+
+### lr 2
+Настройте хуки прекоммита
 
 ```
 pre-commit install

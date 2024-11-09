@@ -5,61 +5,41 @@
 PROJECT_NAME = mlops_homework
 PYTHON_VERSION = 3.10
 PYTHON_INTERPRETER = python
+DOCKER_COMPOSE_FILE = docker-compose.yml
 
 #################################################################################
 # COMMANDS                                                                      #
 #################################################################################
 
+## Установка зависимостей через Poetry
+.PHONY: install
+install:
+	poetry install
 
-## Install Python Dependencies
-.PHONY: requirements
-requirements:
-	$(PYTHON_INTERPRETER) -m pip install -U pip
-	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
-	
+## Активировать виртуальное окружение Poetry
+.PHONY: shell
+shell:
+	poetry shell
 
-
-
-## Delete all compiled Python files
-.PHONY: clean
-clean:
-	find . -type f -name "*.py[co]" -delete
-	find . -type d -name "__pycache__" -delete
-
-## Lint using flake8 and black (use `make format` to do formatting)
-.PHONY: lint
-lint:
-	flake8 mlops_homework
-	isort --check --diff --profile black mlops_homework
-	black --check --config pyproject.toml mlops_homework
-
-## Format source code with black
-.PHONY: format
-format:
-	black --config pyproject.toml mlops_homework
-
-
-
-
-## Set up python interpreter environment
-.PHONY: create_environment
-create_environment:
-	@bash -c "if [ ! -z `which virtualenvwrapper.sh` ]; then source `which virtualenvwrapper.sh`; mkvirtualenv $(PROJECT_NAME) --python=$(PYTHON_INTERPRETER); else mkvirtualenv.bat $(PROJECT_NAME) --python=$(PYTHON_INTERPRETER); fi"
-	@echo ">>> New virtualenv created. Activate with:\nworkon $(PROJECT_NAME)"
-	
-
-
+## Создание .env файла с настройками MinIO
+.PHONY: env
+env:
+	echo "MINIO_ROOT_USER=admin" >> .env
+	echo "MINIO_ROOT_PASSWORD=password" >> .env
 
 #################################################################################
-# PROJECT RULES                                                                 #
+# DOCKER RULES                                                                  #
 #################################################################################
 
+## Собрать и запустить контейнеры Docker
+.PHONY: docker-up
+docker-up:
+	docker-compose -f $(DOCKER_COMPOSE_FILE) up --build
 
-## Make Dataset
-.PHONY: data
-data: requirements
-	$(PYTHON_INTERPRETER) mlops_homework/dataset.py
-
+## Остановить контейнеры Docker
+.PHONY: docker-down
+docker-down:
+	docker-compose -f $(DOCKER_COMPOSE_FILE) down
 
 #################################################################################
 # Self Documenting Commands                                                     #
@@ -71,10 +51,10 @@ define PRINT_HELP_PYSCRIPT
 import re, sys; \
 lines = '\n'.join([line for line in sys.stdin]); \
 matches = re.findall(r'\n## (.*)\n[\s\S]+?\n([a-zA-Z_-]+):', lines); \
-print('Available rules:\n'); \
+print('Доступные команды:\n'); \
 print('\n'.join(['{:25}{}'.format(*reversed(match)) for match in matches]))
 endef
 export PRINT_HELP_PYSCRIPT
 
 help:
-	@$(PYTHON_INTERPRETER) -c "${PRINT_HELP_PYSCRIPT}" < $(MAKEFILE_LIST)
+	@$(PYTHON_INTERPRETER) -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
