@@ -37,7 +37,7 @@ echo "MINIO_ROOT_PASSWORD=password" >> .env
 5. Соберите и запустите Docker
 
 ```
-docker-compose up --build
+docker-compose up -d --build
 ```
 Теперь сервис доступен по локальному адресу: http://127.0.0.1:9000
 И там уже будет bucket с файлом датасета
