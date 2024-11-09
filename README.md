@@ -12,6 +12,10 @@
 ```
 git clone https://github.com/MajeFlz/mlops_homework
 cd mlops_homework
+```
+
+Если хотите запустить из ветки
+```
 git checkout homework3
 
 ```
