@@ -33,7 +33,10 @@ poetry shell
 echo "MINIO_ROOT_USER=admin" >> .env
 echo "MINIO_ROOT_PASSWORD=password" >> .env
 ```
-
+4.1 Создайте папки для данных
+```
+mkdir -p ./data/raw ./data/processed
+```
 5. Соберите и запустите Docker
 
 ```
