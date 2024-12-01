@@ -12,10 +12,6 @@
 ```
 git clone https://github.com/MajeFlz/mlops_homework
 cd mlops_homework
-```
-
-Если хотите запустить из ветки
-```
 git checkout homework3
 
 ```
@@ -37,14 +33,11 @@ poetry shell
 echo "MINIO_ROOT_USER=admin" >> .env
 echo "MINIO_ROOT_PASSWORD=password" >> .env
 ```
-4.1 Создайте папки для данных
-```
-mkdir -p ./data/raw ./data/processed
-```
+
 5. Соберите и запустите Docker
 
 ```
-docker-compose up -d --build
+docker-compose up --build
 ```
 Теперь сервис доступен по локальному адресу: http://127.0.0.1:9000
 И там уже будет bucket с файлом датасета
